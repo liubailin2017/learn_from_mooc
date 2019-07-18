@@ -127,11 +127,10 @@ void print(pos *s) {
     }
 }
 
-pos* _bfs(pos s,pos t) {
+pos* _bfs(pos s,pos t,queue<pos> &q) {
    
     if(map[(t).y][(t).x] == 1 || map[(s).y][(s).x] == 1)
         return nullptr;
-    queue<pos> q(_H*_W);
     q.push(s);
 
     pos *tmp = q._peek();
@@ -252,17 +251,19 @@ pos* _bfs(pos s,pos t) {
     return nullptr;
 }
 
-pos* bfs(pos s,pos t) {
-    return _bfs(t,s);
+pos* bfs(pos s,pos t,queue<pos>& q) {
+    return _bfs(t,s,q);
 }
 
 int main() {
+    
+    queue<pos> q(_H*_W);
     int x,y;
     scanf("%d %d",&x,&y);
     pos s{x,y,nullptr};
     scanf("%d %d",&x,&y);
     pos t{x,y,nullptr};
-    pos *p = bfs(s,t);
+    pos *p = bfs(s,t,q);
     print(p);
     return 0;
 }
