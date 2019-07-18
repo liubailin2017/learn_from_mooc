@@ -1,3 +1,7 @@
+/*总结
+
+*/
+
 #include<stdio.h>
 template<class T>
 class queue{
@@ -67,8 +71,6 @@ class queue{
 };
 
 int a = 0;
-int _W = 13;
-int _H = 9;
 typedef struct pos{
     int x;
     int y;
@@ -81,33 +83,55 @@ typedef struct pos{
     }
 }pos;
 
-char map[9][13] = {
+#define _H 9
+#define _W 13
+char map[_H][_W] = {
     1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,1,1,1,1,1,1,1,1,1,1,1,
-    1,0,1,1,1,1,1,1,0,0,0,0,1,
+    1,0,1,1,1,0,1,1,0,0,0,0,1,
     1,0,0,0,1,1,1,1,0,0,1,0,1,
     1,1,1,0,0,0,0,0,0,0,1,1,1,
     1,1,1,0,0,0,0,0,1,0,0,1,1,
-    1,1,0,0,0,1,1,1,1,0,0,0,1,
+    1,1,0,0,0,0,1,1,1,0,0,0,1,
     1,1,1,1,0,0,0,0,0,0,0,0,1,
     1,1,1,1,1,1,1,1,1,1,1,1,1,
 };
 
-char PRINTS[9][13] ={0};
+char PRINTS[_H][_W] ={0};
 
 void print(pos *s) {
-    if(s == nullptr) {
-        printf("null\n");
-        return;
-    }
     while(s) {
-        printf("(%d,%d)-",s->x,s->y);
+        map[s->y][s->x] = 2;
         s= s->pre;
+    }
+    for(int i = 0; i< _H;i++) {
+        for (int j = 0; j < _W; j++)
+        {
+            switch (map[i][j])
+            {
+            case 1:
+                printf("#");
+                break;
+            case 0:
+                printf(" ");
+                break;
+            case 2:
+                printf("0");
+                break;
+            default:
+                break;
+            }
+        }
+        printf("\n");
+        
     }
 }
 
-pos* bfs(pos s,pos t) {
-    queue<pos> q(9*13);
+pos* _bfs(pos s,pos t) {
+   
+    if(map[(t).y][(t).x] == 1 || map[(s).y][(s).x] == 1)
+        return nullptr;
+    queue<pos> q(_H*_W);
     q.push(s);
 
     pos *tmp = q._peek();
@@ -116,7 +140,7 @@ pos* bfs(pos s,pos t) {
     while (tmp != nullptr)
     {
       if(
-        (tmp->y >=0 && tmp->y<9 && (tmp->x+1) >=0 && (tmp->x+1) < 13)
+        (tmp->y >=0 && tmp->y<_H && (tmp->x+1) >=0 && (tmp->x+1) < _W)
         &&
         map[(*tmp).y][(*tmp).x+1] == 0
         &&
@@ -129,7 +153,7 @@ pos* bfs(pos s,pos t) {
           PRINTS[(*tmp).y][(*tmp).x+1] = 1;
          }
       if(
-        (tmp->y >=0 && tmp->y<9 && (tmp->x-1) >=0 && (tmp->x-1) < 13)
+        (tmp->y >=0 && tmp->y<_H && (tmp->x-1) >=0 && (tmp->x-1) < _W)
         &&
         map[(*tmp).y][(*tmp).x-1] == 0
         &&
@@ -142,7 +166,7 @@ pos* bfs(pos s,pos t) {
           PRINTS[(*tmp).y][(*tmp).x-1] = 1;
         }
       if(
-        ( (tmp->y+1) >=0 && (tmp->y+1)<9 && tmp->x >=0 && tmp->x < 13)
+        ( (tmp->y+1) >=0 && (tmp->y+1)<_H && tmp->x >=0 && tmp->x < _W)
         &&
         map[(*tmp).y+1][(*tmp).x] == 0
         &&
@@ -155,7 +179,7 @@ pos* bfs(pos s,pos t) {
           PRINTS[(*tmp).y+1][(*tmp).x] = 1;
         }
       if(
-        ( (tmp->y-1) >=0 && (tmp->y-1)<9 && tmp->x >=0 && tmp->x < 13)
+        ( (tmp->y-1) >=0 && (tmp->y-1)<_H && tmp->x >=0 && tmp->x < _W)
         &&
         map[(*tmp).y-1][(*tmp).x] == 0
         &&
@@ -167,6 +191,60 @@ pos* bfs(pos s,pos t) {
           q.push(tmp2);
           PRINTS[(*tmp).y-1][(*tmp).x] = 1;
         }
+        //--------------------------------------
+      if(
+        (tmp->y+1 >=0 && tmp->y+1<_H && (tmp->x+1) >=0 && (tmp->x+1) < _W)
+        &&
+        map[(*tmp).y+1][(*tmp).x+1] == 0
+        &&
+        PRINTS[(*tmp).y+1][(*tmp).x+1] == 0) {
+          pos tmp2;
+          tmp2.pre = tmp;
+          tmp2.x = (*tmp).x+1;
+          tmp2.y = (*tmp).y+1;
+          q.push(tmp2);
+          PRINTS[(*tmp).y+1][(*tmp).x+1] = 1;
+         }
+      if(
+        (tmp->y-1 >=0 && tmp->y-1<_H && (tmp->x-1) >=0 && (tmp->x-1) < _W)
+        &&
+        map[(*tmp).y-1][(*tmp).x-1] == 0
+        &&
+        PRINTS[(*tmp).y-1][(*tmp).x-1] == 0) {
+          pos tmp2;
+          tmp2.pre = tmp;
+          tmp2.x = (*tmp).x-1;
+          tmp2.y = (*tmp).y-1;
+          q.push(tmp2);
+          PRINTS[(*tmp).y-1][(*tmp).x-1] = 1;
+        }
+      if(
+        ( (tmp->y+1) >=0 && (tmp->y+1)<_H && tmp->x+1 >=0 && tmp->x+1 < _W)
+        &&
+        map[(*tmp).y+1][(*tmp).x+1] == 0
+        &&
+        PRINTS[(*tmp).y+1][(*tmp).x+1] == 0) {
+          pos tmp2;
+          tmp2.pre = tmp;
+          tmp2.x = (*tmp).x+1;
+          tmp2.y = (*tmp).y+1;
+          q.push(tmp2);
+          PRINTS[(*tmp).y+1][(*tmp).x+1] = 1;
+        }
+      if(
+        ( (tmp->y-1) >=0 && (tmp->y-1)<_H && tmp->x-1 >=0 && tmp->x-1 < _W)
+        &&
+        map[(*tmp).y-1][(*tmp).x-1] == 0
+        &&
+        PRINTS[(*tmp).y-1][(*tmp).x-1] == 0) {
+          pos tmp2;
+          tmp2.pre = tmp;
+          tmp2.x = (*tmp).x-1;
+          tmp2.y = (*tmp).y-1;
+          q.push(tmp2);
+          PRINTS[(*tmp).y-1][(*tmp).x-1] = 1;
+        }
+
         tmp = q._peek();
         q.pop();
         if(*tmp == t) return tmp;
@@ -174,9 +252,16 @@ pos* bfs(pos s,pos t) {
     return nullptr;
 }
 
+pos* bfs(pos s,pos t) {
+    return _bfs(t,s);
+}
+
 int main() {
-    pos s{1,1,nullptr};
-    pos t{11,7,nullptr};
+    int x,y;
+    scanf("%d %d",&x,&y);
+    pos s{x,y,nullptr};
+    scanf("%d %d",&x,&y);
+    pos t{x,y,nullptr};
     pos *p = bfs(s,t);
     print(p);
     return 0;
