@@ -68,6 +68,9 @@ class queue{
             return true;
         }
     }
+    void clean() {
+        l =  r = 0;
+    }
 };
 
 int a = 0;
@@ -89,7 +92,7 @@ char map[_H][_W] = {
     1,1,1,1,1,1,1,1,1,1,1,1,1,
     1,0,1,1,1,1,1,1,1,1,1,1,1,
     1,0,1,1,1,0,1,1,0,0,0,0,1,
-    1,0,0,0,1,1,1,1,0,0,1,0,1,
+    1,0,0,0,0,1,1,1,0,0,1,0,1,
     1,1,1,0,0,0,0,0,0,0,1,1,1,
     1,1,1,0,0,0,0,0,1,0,0,1,1,
     1,1,0,0,0,0,1,1,1,0,0,0,1,
@@ -138,6 +141,7 @@ pos* _bfs(pos s,pos t,queue<pos> &q) {
 
     while (tmp != nullptr)
     {
+      if(*tmp == t) return tmp;
       if(
         (tmp->y >=0 && tmp->y<_H && (tmp->x+1) >=0 && (tmp->x+1) < _W)
         &&
@@ -218,35 +222,33 @@ pos* _bfs(pos s,pos t,queue<pos> &q) {
           PRINTS[(*tmp).y-1][(*tmp).x-1] = 1;
         }
       if(
-        ( (tmp->y+1) >=0 && (tmp->y+1)<_H && tmp->x+1 >=0 && tmp->x+1 < _W)
+        ( (tmp->y+1) >=0 && (tmp->y+1)<_H && tmp->x-1 >=0 && tmp->x-1 < _W)
         &&
-        map[(*tmp).y+1][(*tmp).x+1] == 0
+        map[(*tmp).y+1][(*tmp).x-1] == 0
         &&
-        PRINTS[(*tmp).y+1][(*tmp).x+1] == 0) {
-          pos tmp2;
-          tmp2.pre = tmp;
-          tmp2.x = (*tmp).x+1;
-          tmp2.y = (*tmp).y+1;
-          q.push(tmp2);
-          PRINTS[(*tmp).y+1][(*tmp).x+1] = 1;
-        }
-      if(
-        ( (tmp->y-1) >=0 && (tmp->y-1)<_H && tmp->x-1 >=0 && tmp->x-1 < _W)
-        &&
-        map[(*tmp).y-1][(*tmp).x-1] == 0
-        &&
-        PRINTS[(*tmp).y-1][(*tmp).x-1] == 0) {
+        PRINTS[(*tmp).y+1][(*tmp).x-1] == 0) {
           pos tmp2;
           tmp2.pre = tmp;
           tmp2.x = (*tmp).x-1;
+          tmp2.y = (*tmp).y+1;
+          q.push(tmp2);
+          PRINTS[(*tmp).y+1][(*tmp).x-1] = 1;
+        }
+      if(
+        ( (tmp->y-1) >=0 && (tmp->y-1)<_H && tmp->x+1 >=0 && tmp->x+1 < _W)
+        &&
+        map[(*tmp).y-1][(*tmp).x+1] == 0
+        &&
+        PRINTS[(*tmp).y-1][(*tmp).x+1] == 0) {
+          pos tmp2;
+          tmp2.pre = tmp;
+          tmp2.x = (*tmp).x+1;
           tmp2.y = (*tmp).y-1;
           q.push(tmp2);
-          PRINTS[(*tmp).y-1][(*tmp).x-1] = 1;
+          PRINTS[(*tmp).y-1][(*tmp).x+1] = 1;
         }
-
         tmp = q._peek();
         q.pop();
-        if(*tmp == t) return tmp;
     }
     return nullptr;
 }
