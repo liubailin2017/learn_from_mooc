@@ -8,9 +8,9 @@
  * 
 */
 
-int mergeCount(int a[],int t[],int low,int mid,int high)
+long long mergeCount(int a[],int t[],int low,int mid,int high)
 {
-    int result = 0; 
+    long long result = 0; 
 	int i = mid,j = high,k = high;
 	while(i >= low && j >= mid+1)
 	{
@@ -40,14 +40,14 @@ int mergeCount(int a[],int t[],int low,int mid,int high)
     return result;
 }
 
-int mergesortCount(int s[],int t[],int low, int high)
+long long mergesortCount(int s[],int t[],int low, int high)
 {
 	if(low < high)
 	{
 		
 		int mid= (low + high)/2;
-		int l = mergesortCount(s,t,low,mid);
-		int r = mergesortCount(s,t,mid+1,high);
+		long long l = mergesortCount(s,t,low,mid);
+		long long r = mergesortCount(s,t,mid+1,high);
 		return l + r + mergeCount(s,t,low,mid,high);
 	}
     return 0;
