@@ -7,8 +7,30 @@ void swap(int &a,int &b) {
         b = t;
     }
 }
+/**
+ * int t = 5 
+ *      5 9 1
+ *      l   r
+ * 
+*/
+int div(int arr[],int l,int r) {
+    int t = arr[l];
+    while(l<r) {
+        while(l < r && arr[r] > t) {
+            r --;
+        }
+        if(l < r) arr[l++] = arr[r];
 
-int div(int arr[],int l,int r) { 
+        while(l < r && arr[l] < t) {
+            l++;
+        }
+        if(l < r) arr[r--] = arr[l];
+    }
+    arr[r] = t;
+    return r;
+}
+
+int div_bk(int arr[],int l,int r) { 
     while( l < r){
         while(l < r && arr[l] <= arr[r]) {
            r --; 

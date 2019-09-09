@@ -76,7 +76,6 @@ bool isf() {
         return false;
     else 
         return true;
-
 }
 
 int main() { 
