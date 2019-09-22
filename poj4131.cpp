@@ -6,7 +6,7 @@ int w[3403];
 int v[3403];
 
 int t[12881]; //roll arr
-
+//动规
 int F(int n,int m) {
     for(int j = m; j >= 0; j -- ) {
         if(j >= w[N-1]) 
@@ -23,7 +23,7 @@ int F(int n,int m) {
     return t[m];
 }
 
-
+//递归
 int f(int i,int j) {
     if(i == N-1) {
         if(w[i] <= j) 
