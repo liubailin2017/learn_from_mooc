@@ -10,6 +10,9 @@
 #define   ListIncrement   10
 
 // typedef  int  Status;//状态类型
+#ifndef nullptr
+#define nullptr 0
+#endif
 
 typedef enum  {
     Ok = 111,
@@ -32,8 +35,7 @@ typedef  struct Lnode{
     ElemType   data;
     struct Lnode *next;
 }LNode, *LinkList;
-
-
+ 
 
 inline int isVailable(LinkList list) {
       return !!list; //magic
@@ -99,8 +101,9 @@ Status ListInsert_L(LinkList l, int i, ET e) {
         p = p->next;
     }
     if(p) {
+        LNode *t = p->next;
         p->next = new LNode;
-        p->next ->next = nullptr;
+        p->next ->next = t;
         p->next ->data = e;
         return Ok;
     }else { //越界
@@ -159,13 +162,13 @@ Status PriorElem_L(LinkList  l , ET  e , ET  &pre_e) {
 
 // Test
 int main() {
-    LNode*   list = nullptr;
     LinkList list = nullptr;
 
     if(InitList_L(&list) == Ok) {
-
+		printf("初始化成功\n");
     }else {
-        
+		printf("失败");
+		return -1;
     };
 
     for(int i = 0; i< 10; i++) {
