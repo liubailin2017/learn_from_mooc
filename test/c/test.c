@@ -2,26 +2,26 @@
 
 int ar[100000] = {0};
 
-int main() {
-    int n;
-    scanf("%d",&n);
+typedef struct str {
+    int a;
+    int b;
+}STR;
 
-    for(int i = 0; i < n; i++) {
-        scanf("%d",ar+i);
-    }
-    
-    int mi = 0,mj = 0;
-    for(int i = 1 , j = 0; i < n; i++) {
-        if(ar[i-1] >= ar[i]) {
-            j = i;
-        }
-        if(mi - mj < i - j) {
-            mi = i; mj = j;
-        }
-    }
-    for(int i = mj; i < mi; i++) {
-        printf("%d ",ar[i]);
-    }
-    printf("%d",ar[mi]);
+
+void init(STR *str) {
+    (*str).a = 1000;
+    (*str).b = 1000;
+}
+
+void init (STR str) {
+    str.a = 1000;
+    str.b = 1000;
+}
+
+
+int main() {
+    STR s = {100,200};
+    f2(s);
+    printf("%d %d",s.a,s.b);
     return 0;
 }
