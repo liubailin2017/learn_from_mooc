@@ -4,6 +4,10 @@
 #define  List_Init_Size   10
 #define  ListIncrement   10
 
+#ifndef nullptr
+#define nullptr 0
+#endif
+
 typedef  int  Status;      //状态类型
 typedef  int  ElemType;   //元素类型
 typedef  ElemType  ET;
@@ -98,9 +102,9 @@ int find(SqList *l,ET d) {
 
 void Print(SqList *l) {
     for(int i = 0; i < l-> length; i++) {
-        printf("[");
+        printf("(");
         Print(l->elem[i]);
-        printf("]");
+        printf(")");
     }
 }
 
@@ -174,7 +178,7 @@ int main() {
         SqInsertRear(&list2,7+i);
     }
 
-    printf("Src:\n");
+    printf("Source:\n");
     Print(&list1);
     printf("\n");
     Print(&list2);
