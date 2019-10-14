@@ -29,9 +29,6 @@ int Part::set(int x,int y) {
 }
 bool Part::operator < (const struct _Part &t) const
 {
-	
-		if(same(s,t.s))
-			return false;
 		return s < t.s;
 }
 
@@ -63,7 +60,7 @@ int main() {
 			double tmp = parts[0].e;
 			for(int i = 1; i < N; i++) {
 
-				if(!same(parts[i].s ,tmp) && parts[i].s > tmp) {
+				if(parts[i].s > tmp) {
 					n++; 
 					j = i;
 					tmp = parts[j].e;
