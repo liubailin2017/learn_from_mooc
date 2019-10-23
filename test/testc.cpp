@@ -1,18 +1,17 @@
-#include<iostream>
-#include<string>
-#include<vector>
-#include<algorithm>
+#include <iostream>
+#include <vector>
+#include <string>
+
 using namespace std;
-int main() {
-    vector<int> v;
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(9);
-    v.push_back(3);
-    sort(v.begin(),v.end());
-    vector<int>::iterator iterator;
-    for(iterator = v.begin(); iterator != v.end();iterator++) {
-        
+
+int main()
+{
+
+    vector<string> msg {"Hello", "C++", "World", "from", "VS Code!"};
+
+    for (const string& word : msg)
+    {
+        cout << word << " ";
     }
-    return 0;
+    cout << endl;
 }

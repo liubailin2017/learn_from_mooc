@@ -54,7 +54,7 @@ int main() {
 
             for(int j = 0; j < 5 ; j++) {// j 操作产生影响的行
                 result[j] = t;
-                for(int n = 0; n < 6;n++){
+                for(int n = 0; n < 6;n++) {
                     if(getbit(t,n) == 1) {
                         rebit(tlight[j],n);
                         if(n<5)rebit(tlight[j],n+1);
